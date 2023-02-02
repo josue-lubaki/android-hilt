@@ -24,21 +24,20 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import com.example.android.hilt.ui.MainActivity
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import org.hamcrest.Matchers.containsString
-import org.junit.After
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
+@HiltAndroidTest
 class AppTest {
 
-    @After
-    fun tearDown() {
-        // Remove logs after the test finishes
-        ServiceLocator(getInstrumentation().targetContext).loggerLocalDataSource.removeLogs()
-    }
+    @get:Rule
+    var hiltRule = HiltAndroidRule(this)
 
     @Test
     fun happyPath() {
@@ -58,3 +57,4 @@ class AppTest {
             .check(matches(isDisplayed()))
     }
 }
+
